@@ -3,10 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NUnit.Framework;
 
-namespace addressbook_web_tests.tests
+
+namespace WebAddressBookTests
 {
-    class GroupRemovalTests
+    [TestFixture]
+    public class GroupRemovalTests : AuthTestBase
     {
+        [Test]
+        public void GroupRemovalTest()
+        {
+            app.Groups.Remove(1);
+        }
     }
+
 }
+    
