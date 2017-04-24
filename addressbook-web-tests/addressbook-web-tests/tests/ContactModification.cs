@@ -13,10 +13,10 @@ namespace WebAddressBookTests.test
         [Test]
         public void ContactModificationTest()
         {
-            ContactData NewDataContact = new ContactData("Kate");
-            NewDataContact.Middlename = "kits";
-            NewDataContact.Lastname = "Pambukyan";
-            app.Contacts.ContactModify(1, NewDataContact);
+            ContactData newDataContact = new ContactData("Kate");
+            newDataContact.Middlename = "kits";
+            newDataContact.Lastname = "Pambukyan";
+            app.Contacts.ContactModify(1, newDataContact);
         }
 
     }

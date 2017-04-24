@@ -32,22 +32,39 @@ namespace WebAddressBookTests
         public GroupHelper Modify(int v, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
-            SelectGroup(v);
-            InitGroupModification();
-            FillGroupForm(newData);
-            SubmitGroupModification();
-            ReturnToGroupsPage();
+            if (IsElementPresent(By.Name("selected[]")))
+            {
+                SelectGroup(v);
+                InitGroupModification();
+                FillGroupForm(newData);
+                SubmitGroupModification();
+                ReturnToGroupsPage(); 
+            }
+            else
+            {
+                Create(newData);
+            }
+          
             return this;
         }
 
 
 
-        public GroupHelper Remove(int v)
+        public GroupHelper Remove(int v, GroupData newData)
         {
+
             manager.Navigator.GoToGroupsPage();
-            SelectGroup(v);
-            RemoveGroup();
-            ReturnToGroupsPage();
+            if (IsElementPresent(By.Name("selected[]")))
+            {
+                SelectGroup(v);
+                RemoveGroup();
+                ReturnToGroupsPage();
+            }
+
+            else
+            {
+                Create(newData);
+            }
             return this;
         }
 
@@ -105,6 +122,13 @@ namespace WebAddressBookTests
             return this;
         }
 
+        public GroupData NewDataGroup()
+        {
+            GroupData newData = new GroupData("Apsss");
+            newData.Header = "qoqo";
+            newData.Footer = "ququ";
+            return newData;
+        }
 
     }
 }

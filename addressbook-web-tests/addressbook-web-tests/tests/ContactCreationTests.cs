@@ -13,7 +13,6 @@ namespace WebAddressBookTests
         [Test]
         public void AddNewContactTest()
         {
-
             ContactData contact = new ContactData("Nast");
             contact.Middlename = "pum";
             contact.Lastname = "Pambukyan";
