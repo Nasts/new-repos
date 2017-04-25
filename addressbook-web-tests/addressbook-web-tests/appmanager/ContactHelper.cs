@@ -31,34 +31,20 @@ namespace WebAddressBookTests
 
         public ContactHelper ContactModify(int v, ContactData newDataContact)
         {
-        manager.Navigator.GoToHomePage();
-        if (IsElementPresent(By.Name("selected[]")))
-            {
+                manager.Navigator.GoToHomePage();
                 SelectContact(v);
                 InitContactModification();
                 FillContactForm(newDataContact);
                 SubmitContactModification();
-            }
-            else
-            {
-                CreateContact(newDataContact);
-            }
-            return this;
+                return this;
         }
-
+        
         public ContactHelper RemoveContact(int v, ContactData newDataContact)
         {
-            manager.Navigator.GoToHomePage();
-            if (IsElementPresent(By.Name("selected[]")))
-            {
+                manager.Navigator.GoToHomePage();
                 SelectContact(v);
                 RemoveContact();
                 SubmitRemove();
-            }
-            else
-            {
-                CreateContact(newDataContact);
-            }
             return this;
         }
 
@@ -70,6 +56,10 @@ namespace WebAddressBookTests
             return this;
         }
 
+        public bool ContactExistCheck()
+        {
+           return IsElementPresent(By.Name("selected[]"));
+        }
 
         public void FillContactForm(ContactData contact)
         {

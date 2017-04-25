@@ -17,7 +17,15 @@ namespace WebAddressBookTests.tests
             newData.Header = "qoqo";
             newData.Footer = "ququ";
 
-            app.Groups.Modify(1, newData);
+            if (app.Groups.GroupExistCheck())
+            {
+                app.Groups.Modify(1, newData);
+            }
+            else
+            {
+                app.Groups.Create(newData);
+            }
+          
         }
     }
 }

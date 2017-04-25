@@ -31,41 +31,29 @@ namespace WebAddressBookTests
 
         public GroupHelper Modify(int v, GroupData newData)
         {
-            manager.Navigator.GoToGroupsPage();
-            if (IsElementPresent(By.Name("selected[]")))
-            {
+                manager.Navigator.GoToGroupsPage();
                 SelectGroup(v);
                 InitGroupModification();
                 FillGroupForm(newData);
                 SubmitGroupModification();
                 ReturnToGroupsPage(); 
-            }
-            else
-            {
-                Create(newData);
-            }
-          
-            return this;
+                return this;
         }
 
 
 
         public GroupHelper Remove(int v, GroupData newData)
         {
-
             manager.Navigator.GoToGroupsPage();
-            if (IsElementPresent(By.Name("selected[]")))
-            {
-                SelectGroup(v);
-                RemoveGroup();
-                ReturnToGroupsPage();
-            }
-
-            else
-            {
-                Create(newData);
-            }
+            SelectGroup(v);
+            RemoveGroup();
+            ReturnToGroupsPage();
             return this;
+        }
+
+        public bool GroupExistCheck()
+        {
+            return IsElementPresent(By.Name("selected[]"));
         }
 
         public GroupHelper InitNewGroupCreation()

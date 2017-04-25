@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-
 namespace WebAddressBookTests
 {
     [TestFixture]
@@ -14,8 +13,17 @@ namespace WebAddressBookTests
         [Test]
         public void GroupRemovalTest()
         {
-            GroupData newData = app.Groups.NewDataGroup();
-            app.Groups.Remove(1, newData);
+           GroupData newData = app.Groups.NewDataGroup();
+
+            if (app.Groups.GroupExistCheck())
+            {
+                app.Groups.Remove(1, newData);
+            }
+            else
+            {
+                app.Groups.Create(newData);
+            }
+
         }
 
         
