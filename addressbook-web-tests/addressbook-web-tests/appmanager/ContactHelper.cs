@@ -122,6 +122,14 @@ namespace WebAddressBookTests
 
         public  ContactData NewDataContact()
         {
+            ContactData newContact = new ContactData("Kate");
+            newContact.Middlename = "kits";
+            newContact.Lastname = "opopo";
+            return newContact;
+        }
+
+        public ContactData DataContact()
+        {
             ContactData contact = new ContactData("Nast");
             contact.Middlename = "pum";
             contact.Lastname = "Pambukyan";

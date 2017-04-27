@@ -13,15 +13,16 @@ namespace WebAddressBookTests
         [Test]
         public void GroupRemovalTest()
         {
-           GroupData newData = app.Groups.NewDataGroup();
-
+            GroupData data = app.Groups.DataGroup();
+            
             if (app.Groups.GroupExistCheck())
             {
-                app.Groups.Remove(1, newData);
+                app.Groups.Remove(1, data);
             }
             else
             {
-                app.Groups.Create(newData);
+                app.Groups.Create(data);
+                app.Groups.Remove(1, data);
             }
 
         }

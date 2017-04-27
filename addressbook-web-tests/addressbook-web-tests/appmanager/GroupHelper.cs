@@ -31,13 +31,13 @@ namespace WebAddressBookTests
 
         public GroupHelper Modify(int v, GroupData newData)
         {
-                manager.Navigator.GoToGroupsPage();
-                SelectGroup(v);
-                InitGroupModification();
-                FillGroupForm(newData);
-                SubmitGroupModification();
-                ReturnToGroupsPage(); 
-                return this;
+            manager.Navigator.GoToGroupsPage();
+            SelectGroup(v);
+            InitGroupModification();
+            FillGroupForm(newData);
+            SubmitGroupModification();
+            ReturnToGroupsPage();
+            return this;
         }
 
 
@@ -64,15 +64,15 @@ namespace WebAddressBookTests
 
         public GroupHelper FillGroupForm(GroupData group)
         {
-          
+
             Type(By.Name("group_name"), group.Name);
             Type(By.Name("group_header"), group.Header);
             Type(By.Name("group_footer"), group.Footer);
-           
+
             return this;
         }
 
-       
+
 
         public GroupHelper SubmitGroupCreation()
         {
@@ -117,6 +117,15 @@ namespace WebAddressBookTests
             newData.Footer = "ququ";
             return newData;
         }
+
+        public GroupData DataGroup()
+        {
+            GroupData data = new GroupData("Group");
+            data.Header = "one";
+            data.Footer = "two";
+            return data;
+        }
+
 
     }
 }
