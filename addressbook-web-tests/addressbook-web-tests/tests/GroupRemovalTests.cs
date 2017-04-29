@@ -15,15 +15,13 @@ namespace WebAddressBookTests
         {
             GroupData data = app.Groups.DataGroup();
             
-            if (app.Groups.GroupExistCheck())
-            {
-                app.Groups.Remove(1, data);
-            }
-            else
+            if (!app.Groups.GroupExistCheck())
             {
                 app.Groups.Create(data);
-                app.Groups.Remove(1, data);
             }
+          
+                app.Groups.Remove(1, data);
+     
 
         }
 

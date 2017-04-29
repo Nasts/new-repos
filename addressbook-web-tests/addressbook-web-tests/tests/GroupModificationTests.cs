@@ -18,17 +18,11 @@ namespace WebAddressBookTests.tests
             GroupData newData = app.Groups.NewDataGroup();
 
           
-            if (app.Groups.GroupExistCheck())
-            {
-                app.Groups.Modify(1, newData);
-            }
-            else
+            if (!app.Groups.GroupExistCheck())
             {
                 app.Groups.Create(data);
-                app.Groups.Modify(1, newData);
             }
-
-           
+              app.Groups.Modify(1, newData);
         }
     }
 }

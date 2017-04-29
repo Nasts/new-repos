@@ -11,7 +11,7 @@ namespace WebAddressBookTests
         private string username; //значения
         private string password;
 
-        //конструктор для быстрого конструирования, в одну строку
+        //конструктор
         public AccountData(string username, string password)
         {
             this.username = username;

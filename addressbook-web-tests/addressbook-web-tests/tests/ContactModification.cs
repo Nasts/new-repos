@@ -16,15 +16,12 @@ namespace WebAddressBookTests.test
             ContactData dataContact = app.Contacts.DataContact();
             ContactData newDataContact = app.Contacts.NewDataContact();
 
-            if (app.Contacts.ContactExistCheck())
-            {
-                app.Contacts.ContactModify(1, newDataContact);
-            }
-            else
+            if (!app.Contacts.ContactExistCheck())
             {
                 app.Contacts.CreateContact(dataContact);
-                app.Contacts.ContactModify(1, newDataContact);
             }
+
+               app.Contacts.ContactModify(1, newDataContact);
 
         }
 
