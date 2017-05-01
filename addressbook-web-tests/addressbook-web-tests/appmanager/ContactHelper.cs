@@ -28,6 +28,24 @@ namespace WebAddressBookTests
             return this;
         }
 
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+
+            manager.Navigator.GoToHomePage();
+
+            ICollection<IWebElement> entries = driver.FindElements(By.Name("entry"));
+           
+
+            foreach (IWebElement entry in entries)
+            {
+                string firstName = entry.FindElements(By.TagName("td"))[2].Text;
+                string lastName = entry.FindElements(By.TagName("td"))[1].Text;
+                contacts.Add(new ContactData(firstName, lastName));
+            }
+            return contacts;
+           
+        }
 
         public ContactHelper ContactModify(int v, ContactData newDataContact)
         {
@@ -106,7 +124,7 @@ namespace WebAddressBookTests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
             return this;
         }
 
@@ -120,19 +138,19 @@ namespace WebAddressBookTests
             driver.FindElement(By.Name("submit")).Click();
         }
 
-        public  ContactData NewDataContact()
+       /* public  ContactData NewDataContact()
         {
-            ContactData newContact = new ContactData("Kate");
+            ContactData newContact = new ContactData("Kate", "opopo");
             newContact.Middlename = "kits";
-            newContact.Lastname = "opopo";
+           // newContact.Lastname = "opopo";
             return newContact;
-        }
+        }*/
 
-        public ContactData DataContact()
+        public ContactData NewDataContact()
         {
-            ContactData contact = new ContactData("Nast");
+            ContactData contact = new ContactData("Nast", "Pambukyan");
             contact.Middlename = "pum";
-            contact.Lastname = "Pambukyan";
+           // contact.Lastname = "Pambukyan";
             return contact;
         }
     }

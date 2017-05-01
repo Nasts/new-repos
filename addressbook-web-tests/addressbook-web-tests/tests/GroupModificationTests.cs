@@ -14,15 +14,25 @@ namespace WebAddressBookTests.tests
         public void GroupModificationTest()
         {
 
-            GroupData data = app.Groups.DataGroup();
-            GroupData newData = app.Groups.NewDataGroup();
+            GroupData newData = new GroupData("ddd");
+            newData.Header = null;
+            newData.Footer = null;
 
-          
             if (!app.Groups.GroupExistCheck())
             {
-                app.Groups.Create(data);
+                app.Groups.Create(newData);
             }
-              app.Groups.Modify(1, newData);
+
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            app.Groups.Modify(0, newData);
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups[0].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }
