@@ -18,34 +18,7 @@ namespace WebAddressBookTests
 
         }
 
-        public ContactHelper AddContactToGroup(int v)
-        {
-            manager.Navigator.GoToHomePage();
-            SelectContact(v);
-            new GroupHelper(manager).SelectGroup(v);
-            SubmitAddContactToGroup();
-            //manager.Navigator.GoToGroupsPage();
-            return this;
-        }
-
-        public List<ContactData> GetContactList()
-        {
-            List<ContactData> contacts = new List<ContactData>();
-
-            manager.Navigator.GoToHomePage();
-
-            ICollection<IWebElement> entries = driver.FindElements(By.Name("entry"));
-           
-
-            foreach (IWebElement entry in entries)
-            {
-                string firstName = entry.FindElements(By.TagName("td"))[2].Text;
-                string lastName = entry.FindElements(By.TagName("td"))[1].Text;
-                contacts.Add(new ContactData(firstName, lastName));
-            }
-            return contacts;
-           
-        }
+     
 
         public ContactHelper ContactModify(int v, ContactData newDataContact)
         {
@@ -90,6 +63,7 @@ namespace WebAddressBookTests
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -99,17 +73,11 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public ContactHelper SubmitAddContactToGroup()
-        {
-            driver.FindElement(By.Name("add")).Click();
-            return this;
-        }
-
-
 
         public ContactHelper SubmitRemove()
         {
             driver.SwitchTo().Alert().Accept();
+            contactCache = null;
             return this;
             //driver.SwitchTo().Alert();
             //return true;
@@ -136,6 +104,7 @@ namespace WebAddressBookTests
         public void SubmitContactCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            contactCache = null;
         }
 
        /* public  ContactData NewDataContact()
@@ -152,6 +121,29 @@ namespace WebAddressBookTests
             contact.Middlename = "pum";
            // contact.Lastname = "Pambukyan";
             return contact;
+        }
+
+        private List<ContactData> contactCache = null;
+
+        public List<ContactData> GetContactList()
+        {
+            if (contactCache == null)
+            {
+                contactCache = new List<ContactData>();
+                manager.Navigator.GoToHomePage();
+                ICollection<IWebElement> entries = driver.FindElements(By.Name("entry"));
+
+                foreach (IWebElement entry in entries)
+                {
+                    string firstName = entry.FindElements(By.TagName("td"))[2].Text;
+                    string lastName = entry.FindElements(By.TagName("td"))[1].Text;
+                    contactCache.Add(new ContactData(firstName, lastName));
+                }
+            }
+
+            //List<ContactData> contacts = new List<ContactData>();
+            return new List<ContactData>(contactCache);
+
         }
     }
 }
