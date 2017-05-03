@@ -8,7 +8,9 @@ namespace WebAddressBookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        
+        private string allPhones;
+        private string allEmails;
+
         //конструктор
         public ContactData(string firstname, string lastname)
         {
@@ -19,14 +21,86 @@ namespace WebAddressBookTests
 
         //свойстви знаечний
         public string Firstname { get; set; }
-       
-
+      
         public string Middlename { get; set; }
         
         public string Lastname { get; set; }
-        
 
-  
+        public string Adress { get; set; }
+
+        public string HomePhone { get; set; }
+
+        public string MobilePhone { get; set; }
+
+        public string WorkPhone { get; set; }
+
+        public string EmailAddress { get; set; }
+
+        public string Email2Address { get; set; }
+
+        public string Email3Address { get; set; }
+
+        public string AllPhones {
+            get
+            {
+                if (allPhones != null)
+                {
+                    return allPhones;
+                }
+                else
+                {
+                    return (ClenUp(HomePhone) + ClenUp(MobilePhone) + ClenUp(WorkPhone)).Trim();
+                }
+
+            }
+            set
+            {
+                allPhones = value;
+            }
+        }
+
+        public string AllEmails
+        {
+            get
+            {
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {
+                    return (ClenUpEmail(EmailAddress) + ClenUpEmail(Email2Address) + ClenUpEmail(Email3Address)).Trim();
+                }
+
+            }
+            set
+            {
+                allEmails = value;
+            }
+        }
+
+        private string ClenUp(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+        }
+
+
+        private string ClenUpEmail(string email)
+        {
+            if (email == null || email == "")
+            {
+                return "";
+            }
+            return email + "\r\n";
+        }
+
+
+
+
         public bool Equals(ContactData other)
         {
             if (Object.ReferenceEquals(other, null))
