@@ -10,12 +10,26 @@ namespace WebAddressBookTests
     [TestFixture]
     public class WebAddressBookTests : TestBase
     {
-
-        [Test]
-        public void AddNewContactTest()
+        public static IEnumerable<ContactData> RandomContactDataProvider()
         {
-            ContactData contact = new ContactData("Nast", "Pambukyan");
-            contact.Middlename = "pum";
+            List<ContactData> contacts = new List<ContactData>();
+            for (int i = 0; i < 3; i++)
+            {
+                contacts.Add(new ContactData(GenerateRandomString(30), GenerateRandomString(30))
+                {
+                    Middlename = (GenerateRandomString(30)),
+                    
+                });
+            }
+            return contacts;
+        }
+
+
+        [Test, TestCaseSource("RandomContactDataProvider")]
+        public void AddNewContactTest(ContactData contact)
+        {
+            //ContactData contact = new ContactData("Nast", "Pambukyan");
+            //contact.Middlename = "pum";
             //contact.Lastname = ;
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
