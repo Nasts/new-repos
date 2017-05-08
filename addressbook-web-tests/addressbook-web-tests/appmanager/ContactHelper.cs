@@ -200,6 +200,47 @@ namespace WebAddressBookTests
                  .FindElements(By.TagName("td"))[7]
                  .FindElement(By.TagName("a")).Click();
         }
+        
+        public int GetNumberOfSearchResults()
+        {
+            manager.Navigator.GoToHomePage();
+
+            string text = driver.FindElement(By.TagName("span")).Text;
+            return Int32.Parse(text);
+
+        }
+
+        // таблица свойств контакта
+        public ContactData GetContactInformationFromDetailTable(int v)
+        {
+            manager.Navigator.GoToHomePage();
+            InitContactDetailsForm(0);
+            string allContactsNames = driver.FindElement(By.CssSelector("div#content")).Text;
+            string[] parts = allContactsNames.Split('\n');
+
+            string allName = parts[0].ToString();
+            string[] words = allName.Split(new char[] { ' ' });
+            string firstName = words[0];
+            string lastName = words[1].Trim();
+            string allemails = parts[5].ToString() + "\n" + parts[6].ToString();
+            string allphones = parts[2].ToString() + parts[3].ToString();
+            
+
+            return new ContactData(firstName, lastName)
+            {
+
+                AllPhones = allphones,
+                AllEmails = allemails,
+            };
+
+        }
+
+        private void InitContactDetailsForm(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]
+                 .FindElements(By.TagName("td"))[6]
+                 .FindElement(By.TagName("a")).Click();
+        }
     }
 }
 
