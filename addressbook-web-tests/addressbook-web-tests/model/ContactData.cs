@@ -19,6 +19,10 @@ namespace WebAddressBookTests
             Lastname = lastname;
         }
 
+        public ContactData()
+        {
+        }
+
 
         //свойстви знаечний
         public string Firstname { get; set; }
