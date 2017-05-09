@@ -4,6 +4,10 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Collections.Generic;
 using NUnit.Framework;
+using System.Xml;
+using Newtonsoft.Json;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace WebAddressBookTests
 {
@@ -18,14 +22,43 @@ namespace WebAddressBookTests
                 contacts.Add(new ContactData(GenerateRandomString(30), GenerateRandomString(30))
                 {
                     Middlename = (GenerateRandomString(30)),
-                    
                 });
             }
             return contacts;
         }
 
+        public static IEnumerable<ContactData> ContactDataFromCsvFile()
+        {
+            List<ContactData> groups = new List<ContactData>();
+            string[] lines = File.ReadAllLines(@"contacts.csv");
+            foreach (string l in lines)
+            {
+                string[] parts = l.Split(',');
+                groups.Add(new ContactData(parts[0],parts[1])
+                {
+                    Middlename = parts[2]
+                });
+            }
+            return groups;
+        }
 
-        [Test, TestCaseSource("RandomContactDataProvider")]
+        public static IEnumerable<ContactData> ContactDataFromXmlFile()
+        {
+
+            return (List<ContactData>)new XmlSerializer(typeof(List<ContactData>))
+                 .Deserialize(new StreamReader(@"contacts.xml"));
+
+        }
+
+        public static IEnumerable<ContactData> GroupDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<ContactData>>(
+                File.ReadAllText(@"contacts.json"));
+        }
+
+
+
+        [Test, TestCaseSource("ContactDataFromXmlFile")]
         public void AddNewContactTest(ContactData contact)
         {
             //ContactData contact = new ContactData("Nast", "Pambukyan");
@@ -40,9 +73,7 @@ namespace WebAddressBookTests
             oldContacts.Add(contact);
             oldContacts.Sort();
             newContacts.Sort();
-
             Assert.AreEqual(oldContacts, newContacts);
-
 
         }
 
