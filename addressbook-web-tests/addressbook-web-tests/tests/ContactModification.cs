@@ -8,25 +8,26 @@ using NUnit.Framework;
 namespace WebAddressBookTests.test
 {
     [TestFixture]
-    public class ContactModificationTests : AuthTestBase
+    public class ContactModificationTests : ContactTestBase
     {
         [Test]
         public void ContactModificationTest()
         {
             ContactData newDataContact = new ContactData("Nast", "Pambukyan");
             newDataContact.Middlename = "pum";
-           
+
 
             if (!app.Contacts.ContactExistCheck())
             {
                 app.Contacts.CreateContact(newDataContact);
             }
 
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll();
+            ContactData contactToBeDiffer = oldContacts[0];
 
-            app.Contacts.ContactModify(0, newDataContact);
+            app.Contacts.ContactModify(contactToBeDiffer, newDataContact);
 
-            List<ContactData> newContacts = app.Contacts.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAll();
 
             oldContacts[0].Lastname = newDataContact.Lastname;
             oldContacts[1].Firstname = newDataContact.Firstname;

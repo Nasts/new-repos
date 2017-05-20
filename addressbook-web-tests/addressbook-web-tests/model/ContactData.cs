@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using LinqToDB.Mapping;
 
 namespace WebAddressBookTests
 {
+    [Table (Name = "addressbook")]
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allPhones;
@@ -23,27 +25,40 @@ namespace WebAddressBookTests
         {
         }
 
+        [Column(Name = "id"), PrimaryKey]
+        public string Id { get; set; }
 
-        //свойстви знаечний
+        [Column(Name = "firstname")]
         public string Firstname { get; set; }
-      
+
+        [Column(Name = "middlename"), PrimaryKey]
         public string Middlename { get; set; }
-        
+
+        [Column(Name = "lastname")]
         public string Lastname { get; set; }
 
+        [Column(Name = "address")]
         public string Adress { get; set; }
 
+        [Column(Name = "home")]
         public string HomePhone { get; set; }
 
+        [Column(Name = "mobile")]
         public string MobilePhone { get; set; }
 
+        [Column(Name = "work")]
         public string WorkPhone { get; set; }
 
+        [Column(Name = "email")]
         public string EmailAddress { get; set; }
 
+        [Column(Name = "email2")]
         public string Email2Address { get; set; }
 
+        [Column(Name = "email3")]
         public string Email3Address { get; set; }
+
+        public string AllContactsNames { get; set; }
 
         public string AllPhones {
             get
@@ -83,7 +98,15 @@ namespace WebAddressBookTests
                 allEmails = value;
             }
         }
-
+        //БД
+        public static List<ContactData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contacts select c).ToList();
+            }
+        }
+        //
         private string ClenUp(string phone)
         {
             if (phone == null || phone == "")

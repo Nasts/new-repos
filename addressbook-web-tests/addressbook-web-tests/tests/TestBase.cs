@@ -9,6 +9,7 @@ namespace WebAddressBookTests
 {
     public class TestBase
     {
+        public static bool PERFORM_LONG_UI_CHECKS = false;
         public static Random rnd = new Random();
         protected ApplicationManager app;
 

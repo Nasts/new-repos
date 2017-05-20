@@ -5,6 +5,7 @@ using System.Threading;
 using System.Collections.Generic;
 using NUnit.Framework;
 using System.Xml;
+using System.Linq;
 using Newtonsoft.Json;
 using System.Xml.Serialization;
 using System.IO;
@@ -12,7 +13,7 @@ using System.IO;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
@@ -62,13 +63,13 @@ namespace WebAddressBookTests
         [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreationTest(GroupData group)
         {
-
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            //без доп операций в бд
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             app.Groups.Create(group);
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
@@ -97,6 +98,15 @@ namespace WebAddressBookTests
             newGroups.Sort();
 
             Assert.AreEqual(oldGroups, newGroups);
+        }
+
+        [Test]
+        public void TestDBConnectibity()
+        {
+            foreach (ContactData contact in GroupData.GetAll()[0].GetContacts())
+            {
+                System.Console.Out.WriteLine(contact);
+            }
         }
 
     }

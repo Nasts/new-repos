@@ -30,8 +30,27 @@ namespace WebAddressBookTests
             return this;
         }
 
+        public ContactHelper ContactModify(ContactData contact, ContactData newDataContact)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(contact.Id);
+            InitContactModification();
+            FillContactForm(newDataContact);
+            SubmitContactModification();
+            return this;
+        }
+        public ContactHelper RemoveContact(ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(contact.Id);
+            RemoveContact();
+            SubmitRemove();
+            return this;
+        }
 
-        public ContactHelper RemoveContact(int v, ContactData newDataContact)
+      
+
+        public ContactHelper RemoveContact(int v)
         {
             manager.Navigator.GoToHomePage();
             SelectContact(v);
@@ -94,6 +113,12 @@ namespace WebAddressBookTests
         public ContactHelper SelectContact(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(string id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (id) + "]")).Click();
             return this;
         }
 
@@ -193,8 +218,53 @@ namespace WebAddressBookTests
             };
         }
 
+        //для сравнений с детальной формой
+       // public ContactData GetContactInformationFromEditFormForDetails(int index)
+       // {
+           // manager.Navigator.GoToHomePage();
+         //   InitContactModificationTables(0);
 
-        public void InitContactModificationTables(int index)
+         //   string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+          //  string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            
+
+       // }
+
+        // таблица свойств контакта
+        public ContactData GetContactInformationFromDetailTable(int v)
+        {
+            manager.Navigator.GoToHomePage();
+            InitContactDetailsForm(0);
+
+            //string allContactsNames = driver.FindElement(By.CssSelector("div#content")).Text;
+            //string[] parts = allContactsNames.Split('\n');
+
+            //string allName = parts[0].ToString();
+            //string[] words = allName.Split(new char[] { ' ' });
+            //string firstName = words[0];
+            //string lastName = words[1].Trim();
+            //string allemails = parts[5].ToString() + "\n" + parts[6].ToString();
+            //string allphones = parts[2].ToString() + parts[3].ToString();
+
+            //надо брать информацию полностью
+            string allContactsNames = driver.FindElement(By.CssSelector("div#content")).Text;
+            return new ContactData()
+            {
+                AllContactsNames = allContactsNames
+        };
+
+    }
+    //return new ContactData(firstName, lastName)
+    //{
+
+    //AllPhones = allphones,
+    // AllEmails = allemails,
+    //};
+
+
+
+
+    public void InitContactModificationTables(int index)
         {
             driver.FindElements(By.Name("entry"))[index]
                  .FindElements(By.TagName("td"))[7]
@@ -210,29 +280,9 @@ namespace WebAddressBookTests
 
         }
 
-        // таблица свойств контакта
-        public ContactData GetContactInformationFromDetailTable(int v)
+        public int GetContactCount()
         {
-            manager.Navigator.GoToHomePage();
-            InitContactDetailsForm(0);
-            string allContactsNames = driver.FindElement(By.CssSelector("div#content")).Text;
-            string[] parts = allContactsNames.Split('\n');
-
-            string allName = parts[0].ToString();
-            string[] words = allName.Split(new char[] { ' ' });
-            string firstName = words[0];
-            string lastName = words[1].Trim();
-            string allemails = parts[5].ToString() + "\n" + parts[6].ToString();
-            string allphones = parts[2].ToString() + parts[3].ToString();
-            
-
-            return new ContactData(firstName, lastName)
-            {
-
-                AllPhones = allphones,
-                AllEmails = allemails,
-            };
-
+            return driver.FindElements(By.CssSelector("span.group")).Count;
         }
 
         private void InitContactDetailsForm(int index)
