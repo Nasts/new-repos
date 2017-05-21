@@ -30,6 +30,66 @@ namespace WebAddressBookTests
             return this;
         }
 
+        public void DeleteContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectGroupToDelFrom(group.Name);
+            SelectContactToDelFrom(contact.Id);
+            CommitDelContactFromGroup();
+        }
+
+        private void CommitDelContactFromGroup() 
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
+        private void SelectContactToDelFrom(string contactId)
+        {
+            driver.FindElement(By.Id(contactId)).Click();
+        }
+
+        private void SelectGroupToDelFrom(string name)
+        {
+            //new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+         
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(name);
+            // driver.FindElement(By.Id("51")).Click();
+            // driver.FindElement(By.Name("group")).Click();
+
+        }
+
+        public void AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            ClearGroupFilter();
+            SelectContactToAdd(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+
+        }
+
+        public void SelectContactToAdd(string contactId)
+        {
+            driver.FindElement(By.Id(contactId)).Click();
+        }
+
+        public void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        public void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        public void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
         public ContactHelper ContactModify(ContactData contact, ContactData newDataContact)
         {
             manager.Navigator.GoToHomePage();
