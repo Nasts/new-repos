@@ -12,21 +12,31 @@ namespace WebAddressBookTests
         [Test]
         public void TestRemovalContactFromGroup()
         {
-            GroupData group = GroupData.GetAll()[0];
-            List<ContactData> oldList = group.GetContacts();
-          
 
-            ContactData contact =
-                 oldList.First();
 
-            app.Contacts.DeleteContactFromGroup(contact, group);
+            if (app.Groups.GroupExistCheck())
+            {
+                GroupData group = GroupData.GetAll()[0];
 
-           List<ContactData> newList = group.GetContacts();
-          // oldList.Add(contact);
-           //newList.Sort();
-           //oldList.Sort();
+                List<ContactData> oldList = group.GetContacts();
+                if (oldList.Count != 0)
+                {
 
-            Assert.AreEqual(oldList.Count - 1, newList.Count);
+                    ContactData contact = oldList.First();
+                    app.Contacts.DeleteContactFromGroup(contact, group);
+                    List<ContactData> newList = group.GetContacts();
+                    Assert.AreEqual(oldList.Count - 1, newList.Count);
+                }
+                else
+                {
+                    System.Console.Out.Write("The group is null");
+                }
+            }
+            else
+            {
+                System.Console.Out.Write("No groups in addressbook");
+            }
+            
         }
     }
 }
