@@ -23,7 +23,7 @@ namespace WebAddressBookTests
         public ContactHelper ContactModify(int v, ContactData newDataContact)
         {
             manager.Navigator.GoToHomePage();
-            SelectContact(v);
+            //SelectContact(v);
             InitContactModification();
             FillContactForm(newDataContact);
             SubmitContactModification();
@@ -99,6 +99,8 @@ namespace WebAddressBookTests
             SubmitContactModification();
             return this;
         }
+
+    
         public ContactHelper RemoveContact(ContactData contact)
         {
             manager.Navigator.GoToHomePage();
@@ -152,7 +154,7 @@ namespace WebAddressBookTests
             driver.FindElement(By.CssSelector("img[alt=\"Edit\"]")).Click();
             return this;
         }
-
+       
 
         public ContactHelper SubmitRemove()
         {
@@ -176,9 +178,16 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public ContactHelper SelectContact(string id)
+       public ContactHelper SelectContact(string id)
+       {
+            // driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (id) + "]")).Click();
+           driver.FindElement(By.XPath($"//input[@name='selected[]'][@id={id}]")).Click();
+           return this;
+       }
+
+        public ContactHelper InitContactModification(string id)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (id) + "]")).Click();
+            driver.FindElement(By.XPath($"//input[@name='selected[]'][@id={id}]")).Click();
             return this;
         }
 
