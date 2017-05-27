@@ -93,8 +93,8 @@ namespace WebAddressBookTests
         public ContactHelper ContactModify(ContactData contact, ContactData newDataContact)
         {
             manager.Navigator.GoToHomePage();
-            SelectContact(contact.Id);
-            InitContactModification();
+            //SelectContact(contact.Id);
+            InitContactModification(contact.Id);
             FillContactForm(newDataContact);
             SubmitContactModification();
             return this;
@@ -154,7 +154,12 @@ namespace WebAddressBookTests
             driver.FindElement(By.CssSelector("img[alt=\"Edit\"]")).Click();
             return this;
         }
-       
+
+        public ContactHelper InitContactModification(string id)
+        {
+            driver.FindElement(By.XPath(String.Format("//a[@href='edit.php?id={0}']", id))).Click();
+            return this;
+        }
 
         public ContactHelper SubmitRemove()
         {
@@ -185,11 +190,7 @@ namespace WebAddressBookTests
            return this;
        }
 
-        public ContactHelper InitContactModification(string id)
-        {
-            driver.FindElement(By.XPath($"//input[@name='selected[]'][@id={id}]")).Click();
-            return this;
-        }
+       
 
         public void InitNewContactCreation()
         {
