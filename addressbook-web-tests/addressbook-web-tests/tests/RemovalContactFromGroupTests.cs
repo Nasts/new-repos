@@ -14,7 +14,6 @@ namespace WebAddressBookTests
         {
             ContactData dataContact = app.Contacts.NewDataContact();
             GroupData group = GroupData.GetAll()[0];
-           
 
             if (group.GetContacts().Count == 0)
             {

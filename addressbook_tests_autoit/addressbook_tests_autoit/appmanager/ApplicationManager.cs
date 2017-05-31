@@ -31,7 +31,7 @@ namespace addressbook_tests_autoit
         }
 
         public AutoItX3 Aux
-        {
+        { 
             get
             {
                 return aux;

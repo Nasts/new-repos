@@ -8,7 +8,7 @@ namespace addressbook_tests_autoit
 {
     public class GroupHelper : HelperBase
     {
-        public static string GROUPWINTITLE = "Group Editor";
+        public static string GROUPWINTITLE = "Group editor";
         public GroupHelper(ApplicationManager manager) : base(manager)
         {
 
@@ -20,6 +20,7 @@ namespace addressbook_tests_autoit
             OpenGroupsDialogue();
             string count =
             aux.ControlTreeView(GROUPWINTITLE, "", "WindowsForms10.SysTreeView32.app.0.2c908d51", "GetItemCount", "#0","");
+             
             for (int i = 0; i<int.Parse(count); i++)
             {
                 string item =
@@ -35,6 +36,21 @@ namespace addressbook_tests_autoit
             CloseGroupsDialogue();
             return list;
         }
+
+        public void Remove(List<GroupData> oldGroups)
+        {
+            OpenGroupsDialogue();
+            aux.ControlClick(GROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d53");
+            aux.ControlClick(GROUPWINTITLE, "", "WindowsForms10.SysTreeView32.app.0.2c908d51");
+            
+           // aux.ControlCommand(GROUPWINTITLE, "", oldGroups.First(, "SelectString");
+            aux.ControlClick(GROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d51");
+            aux.ControlClick("Delete group", "", "WindowsForms10.BUTTON.app.0.2c908d5");
+
+            CloseGroupsDialogue();
+        }
+
+
 
         public void Add(GroupData newGroup)
         {
