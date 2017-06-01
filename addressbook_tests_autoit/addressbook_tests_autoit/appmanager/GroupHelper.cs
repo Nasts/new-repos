@@ -41,11 +41,12 @@ namespace addressbook_tests_autoit
         {
             OpenGroupsDialogue();
             aux.ControlClick(GROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d53");
-            aux.ControlClick(GROUPWINTITLE, "", "WindowsForms10.SysTreeView32.app.0.2c908d51");
-            
-           // aux.ControlCommand(GROUPWINTITLE, "", oldGroups.First(, "SelectString");
+            // aux.ControlClick(GROUPWINTITLE, "", "WindowsForms10.SysTreeView32.app.0.2c908d51");
+            int id = oldGroups.Count()-1;
+            aux.ControlTreeView(GROUPWINTITLE, "", "WindowsForms10.SysTreeView32.app.0.2c908d51", "Select", "#0|#" + id, "");
+            // aux.ControlCommand(GROUPWINTITLE, "", oldGroups.First(, "SelectString");
             aux.ControlClick(GROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d51");
-            aux.ControlClick("Delete group", "", "WindowsForms10.BUTTON.app.0.2c908d5");
+            aux.ControlClick("Delete group", "", "WindowsForms10.BUTTON.app.0.2c908d53");
 
             CloseGroupsDialogue();
         }

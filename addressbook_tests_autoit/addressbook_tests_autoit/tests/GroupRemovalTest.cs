@@ -22,7 +22,7 @@ namespace addressbook_tests_autoit.tests
 
             List<GroupData> newGroups = app.Groups.GetGroupList();
 
-            NUnit.Framework.Assert.AreEqual(oldGroups.Count - 1, newGroups.Count);
+          NUnit.Framework.Assert.AreEqual(oldGroups.Count - 1, newGroups.Count);
 
         }
         
